@@ -9,3 +9,5 @@ const SignUpNow = () => {
         </div>
     )
 }
+
+export default SignUpNow
