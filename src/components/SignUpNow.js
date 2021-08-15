@@ -25,6 +25,7 @@ const SignUpNow = ({registerClient}) => {
             setRegisterError(res) //css on error
         }else {
             setSubmitSuccess(true) 
+            setRegisterError(false)
             console.log(res)
         }
     }
@@ -50,7 +51,6 @@ const SignUpNow = ({registerClient}) => {
                                     placeholder="Full Name"
                                     onChange={handleChange}
                                     />
-                                    {registerError && <div>{registerError}</div>}
                                 </div>
                                 <div className="mt-1">
                                     <input
@@ -60,7 +60,6 @@ const SignUpNow = ({registerClient}) => {
                                     placeholder="Phone Number"
                                     onChange={handleChange}
                                     />
-                                    {registerError && <div>{registerError}</div>}
                                 </div>
                                 <div className="mt-1">
                                     <input
@@ -70,7 +69,6 @@ const SignUpNow = ({registerClient}) => {
                                     placeholder="Email Address"
                                     onChange={handleChange}
                                     />
-                                    {registerError && <div>{registerError}</div>}
                                 </div>
                                 <div className="mt-1">
                                     <textarea
@@ -81,6 +79,7 @@ const SignUpNow = ({registerClient}) => {
                                     onChange={handleChange}
                                     />
                                 </div>
+                                {registerError && <div style={{fontSize: "12px", color: "red"}}>{registerError}</div>}
                                 {submitSuccess ? 
                                 <Alert className="mt-3" variant="success">
                                     Thank you for signing up!
