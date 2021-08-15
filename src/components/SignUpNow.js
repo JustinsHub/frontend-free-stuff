@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import useFormData from '../custom-hooks/useFormData'
+import {Card, Container, Row, Col, Alert} from 'react-bootstrap'
 
-const SignUpNow = () => {
+const SignUpNow = ({registerClient}) => {
     const INITIAL_STATE= {
         full_name: "",
         phone_number: "",
@@ -10,45 +11,90 @@ const SignUpNow = () => {
     }
     
     const [clientForm, handleChange] = useFormData(INITIAL_STATE)
+    const [submitSuccess, setSubmitSuccess] = useState(false)
+    const [registerError, setRegisterError] = useState(false)
     //interested? Information input SIGN UP NOW! UI Timer to for users to get pressured?
-    //how can we get you free stuff topic? lorem ipsum
-    //put form inputs for potential clients
+    //TODO:
+    //[ ] - required below each NOT NULL inputs (errors)
+    //[ ] - submit error handling
+
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+        const res = await registerClient(clientForm)
+        if(!res.data){
+            setRegisterError(res) //css on error
+        }else {
+            setSubmitSuccess(true) 
+            console.log(res)
+        }
+    }
+
     return (
         <div>
-            <form>
-                <div>
-                    <input
-                    name="full_name"
-                    value={clientForm.full_name}
-                    placeholder="Full Name"
-                    onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    name="phone_number"
-                    value={clientForm.phone_number}
-                    placeholder="Phone Number"
-                    onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    name="email"
-                    value={clientForm.email}
-                    placeholder="Email Address"
-                    onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input
-                    name="comments"
-                    value={clientForm.comments}
-                    placeholder="Do you have anything in mind?"
-                    onChange={handleChange}
-                    />
-                </div>
-            </form>
+            <Container>
+                <Row>
+                    <Col lg={4} xs={2}></Col>
+                        <Col>
+                            <Card className="text-center mb-5">
+                                <Card.Body>
+                            <div>
+                                <Card.Title>Interested?</Card.Title>
+                                <h4>Sign up now and before it's too late!</h4>
+                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mt-1">
+                                    <input
+                                    className="form-control input-sign-up"
+                                    name="full_name"
+                                    value={clientForm.full_name}
+                                    placeholder="Full Name"
+                                    onChange={handleChange}
+                                    />
+                                    {registerError && <div>{registerError}</div>}
+                                </div>
+                                <div className="mt-1">
+                                    <input
+                                    className="form-control input-sign-up"
+                                    name="phone_number"
+                                    value={clientForm.phone_number}
+                                    placeholder="Phone Number"
+                                    onChange={handleChange}
+                                    />
+                                    {registerError && <div>{registerError}</div>}
+                                </div>
+                                <div className="mt-1">
+                                    <input
+                                    className="form-control input-sign-up"
+                                    name="email"
+                                    value={clientForm.email}
+                                    placeholder="Email Address"
+                                    onChange={handleChange}
+                                    />
+                                    {registerError && <div>{registerError}</div>}
+                                </div>
+                                <div className="mt-1">
+                                    <textarea
+                                    className="form-control input-sign-up"
+                                    name="comments"
+                                    value={clientForm.comments}
+                                    placeholder="Do you have anything in mind?"
+                                    onChange={handleChange}
+                                    />
+                                </div>
+                                {submitSuccess ? 
+                                <Alert className="mt-3" variant="success">
+                                    Thank you for signing up!
+                                </Alert>
+                                :
+                                <button className="btn btn-primary mt-3">Submit</button>
+                                }
+                            </form>
+                            </Card.Body>
+                            </Card>
+                        </Col>
+                    <Col lg={4} xs={2}></Col>
+                </Row>
+            </Container>
         </div>
     )
 }

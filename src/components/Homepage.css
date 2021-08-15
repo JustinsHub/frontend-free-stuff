@@ -10,3 +10,12 @@
   background-color: rgba(245, 245, 245, 0.678);
   border-radius: 10rem;
 }
+
+.input-sign-up {
+  resize: horizontal;
+  width: 25rem;
+}
+
+.input-sign-up:focus {
+  min-width: 23rem;
+}

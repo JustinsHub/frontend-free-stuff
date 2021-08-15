@@ -2,7 +2,7 @@ import React from 'react'
 import MediaLogos from './MediaLogos'
 import About from './About'
 import SignUpNow from './SignUpNow'
-import InputEmail from './InputEmail'
+import Client from './clientApi'
 import './Homepage.css'
 
 
@@ -10,6 +10,12 @@ const Homepage = () => {
     //tell me more as homepage button and scrolls when click to about me
     //have components here?
     //how to scroll and have a modal popup 
+
+    const registerClient = async (clientInfo) => {
+        const res = await Client.registerClient(clientInfo)
+        return res
+    }
+
     return (
         <section>
             <section className="Homepage-bg container" style={{height: '25rem'}}>
@@ -26,21 +32,19 @@ const Homepage = () => {
                 </div>
             </section>
             
-            <section className="Homepage-bg">
-                <MediaLogos/>
-            </section>
 
             <section className="Homepage-bg">
                 <About/>
             </section>
-
+            
             <section className="Homepage-bg">
-                <SignUpNow/>
+                <MediaLogos/>
             </section>
 
-            <section className="d-flex justify-content-center">
-                <InputEmail/>
+            <section className="Homepag">
+                <SignUpNow registerClient={registerClient}/>
             </section>
+
         </section>
     )
 }
